@@ -8,7 +8,6 @@ import pickle
 #client = Algorithmia.client()
 
 def fizz_buzz(i):
-    """The fizzbuzz algorithm! (You can modify this)"""
     if i % 15 == 0:
         return "fizzbuzz"
     elif i % 5 == 0:
