@@ -1,7 +1,7 @@
 # FizzBuzz-ML
 sample of Fizz Buzz via machine learning model using Algorithmia
 
-![FizzBuzz on Algorithmia](https://github.com/lynnlangit/FizzBuzz-ML/blob/master/Images/FizzBuzzML.png)
+![FizzBuzz on Algorithmia](https://github.com/lynnlangit/FizzBuzz-ML/blob/master/FizzBuzzML.png)
 
   adapted from http://blog.algorithmia.com/solve-fizzbuzz-machine-learning-scikit-learn/
 
