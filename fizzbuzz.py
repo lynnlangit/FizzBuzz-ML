@@ -23,7 +23,7 @@ def build_labeled_samples(samples):
         padding = padding[1:]
 
 def learn():
-    num_samples = 15000
+    num_samples = 101
     fizz_buzz_samples = [fizz_buzz(i) for i in range(1, num_samples + 1)]
     print "Samples " + str(fizz_buzz_samples)
     samples = list(build_labeled_samples(fizz_buzz_samples))
@@ -32,8 +32,7 @@ def learn():
 
     X = np.array([np.array(labeler.transform(x)).flatten() for x, y in samples])
     y = np.array([y for x, y in samples])
-
-    X_train, X_test, y_train, y_test = X[0:10000], X[10000:15000], y[0:10000], y[10000:15000],
+    X_train, X_test, y_train, y_test = X[0:50], X[50:100], y[0:50], y[50:100],
 
     classifier = LogisticRegression(tol=1e-6)
     classifier.fit(X_train, y_train)

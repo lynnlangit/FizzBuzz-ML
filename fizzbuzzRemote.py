@@ -13,6 +13,7 @@ BINARIZER_URL = 'data://lynnlangit/fizzbuzzML/binarizer.pkl'
 CLASSIFIER_URL = 'data://lynnlangit/fizzbuzzML/classifier.pkl'
 BINARIZER_PATH = CLIENT.file(BINARIZER_URL).getFile().name
 CLASSIFIER_PATH = CLIENT.file(CLASSIFIER_URL).getFile().name
+
 with open(BINARIZER_PATH, 'rb') as binarizer_file:
     LABEL = pickle.load(binarizer_file)
 with open(CLASSIFIER_PATH, 'rb') as classifier_file:
@@ -26,7 +27,7 @@ def apply(input):
         val = LABEL.transform(pad + input)
         predicted = CLASSIFIER.predict([np.array(val).flatten()])[0]
         if predicted == "i":
-            result.append(str(i))
+            result.append(i)
         else:
             result.append(predicted)
         input.append(predicted)
