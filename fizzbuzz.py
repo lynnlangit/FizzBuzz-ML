@@ -12,41 +12,38 @@ def fizz_buzz(i):
     elif i % 3 == 0:
         return "fizz"
     else:
-        return "i"
+        return ""+str(i)
 
-sequence_length = 15
+SEQUENCE_LENGTH = 15
 
-def build_samples(samples):
-    """Create list of features and labels we want to predict"""
-    padding = ['PAD'] * sequence_length
-    for i in range(len(samples) - sequence_length - 1):
-        yield [padding + samples[max(0, i - sequence_length):i], samples[i]]
+def build_labeled_samples(samples):
+    padding = ['PAD'] * SEQUENCE_LENGTH
+    for i in range(len(samples) - SEQUENCE_LENGTH - 1):
+        yield [padding + samples[max(0, i - SEQUENCE_LENGTH):i], samples[i]]
         padding = padding[1:]
 
 def learn():
     num_samples = 15000
-
     fizz_buzz_samples = [fizz_buzz(i) for i in range(1, num_samples + 1)]
-    print fizz_buzz_samples
-    samples = list(build_samples(fizz_buzz_samples))
+    print "Samples " + str(fizz_buzz_samples)
+    samples = list(build_labeled_samples(fizz_buzz_samples))
+    labeler = LabelBinarizer()
+    labeler.fit(fizz_buzz_samples + ['PAD'])
 
-    lb = LabelBinarizer()
-    lb.fit(fizz_buzz_samples + ['PAD'])
-
-    X = np.array([np.array(lb.transform(x)).flatten() for x, y in samples])
+    X = np.array([np.array(labeler.transform(x)).flatten() for x, y in samples])
     y = np.array([y for x, y in samples])
 
     X_train, X_test, y_train, y_test = X[0:10000], X[10000:15000], y[0:10000], y[10000:15000],
 
-    clf = LogisticRegression(tol=1e-6)
-    clf.fit(X_train, y_train)
+    classifier = LogisticRegression(tol=1e-6)
+    classifier.fit(X_train, y_train)
 
-    print clf.score(X_test, y_test)
+    print "Score " + str(classifier.score(X_test, y_test))
 
     with open('binarizer.pkl', 'wb') as binarizer_file:
-        pickle.dump(lb, binarizer_file)
+        pickle.dump(labeler, binarizer_file)
     with open('classifier.pkl', 'wb') as classifier_file:
-        pickle.dump(clf, classifier_file)
+        pickle.dump(classifier, classifier_file)
 
 if __name__ == "__main__":
     learn()
